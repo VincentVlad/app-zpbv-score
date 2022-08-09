@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
     export default {
         data() 
         {
@@ -20,14 +22,31 @@
             teams: [],
             }
         },
-        mounted() {
+        async created() {
+            try {
+                const res = await axios.get('http://192.168.0.33:3000/teams');
+                this.teams = res.data;
+            }
+            catch(error)  {
+        if (!error.response) {
+            // network error
+            this.errorStatus = 'Error: Network Error';
+        } else {
+            this.errorStatus = error.response.data.message;
+        }
+      }
+        },
+        /*mounted() {
             fetch('http://localhost:3000/teams')
             .then(res => res.json())
             .then(data => this.teams=data)
             .catch(err => consol.log(err.message))
         },
-        methods: {
+        */
 
+
+        methods: {
+            
         }
         
     }
@@ -39,12 +58,13 @@ body {
 }
 
 .post {
-    background-color: rgba(169, 169, 169, 0.44);
+    background-color: rgb(33, 51, 77);
     display: block;
     border: 1px solid green;
     border-radius: 8px;
     margin: 20px;
     padding: 8px;
+    box-shadow: 0px 0px 15px rgb(90, 255, 170);
 }
 
 .post input {
@@ -58,8 +78,12 @@ margin-right: 8px;
 
 .btn {
     width: 50px;
+    background-color: rgb(20, 16, 68);
+    border:1px solid rgb(87, 220, 235);
     border-radius: 8px;
     margin-bottom: 20px;
+    color: rgb(86, 152, 217);
+    margin-right: 8px;
 }
 
 .time-out {
