@@ -1,0 +1,37 @@
+
+     {
+        "teams":[
+            {
+                "id": 1,
+                "name": "Team1",
+                "rating": 0,
+                "on_serve": 0,
+                "sets": 0,
+                "point": 0,
+                "time_out": false,
+                "attacks": 0,
+                "kills": 0,
+                "errors": 0,
+                "blocks": 0,
+                "aces": 0,
+                "hit": "On work"
+            },
+
+            {
+                "id": 2,
+                "name": "Team2",
+                "rating": 0,
+                "on_serve": 0,
+                "sets": 0,
+                "point": 0,
+                "time_out": false,
+                "attacks": 0,
+                "kills": 0,
+                "errors": 0,
+                "blocks": 0,
+                "aces": 0,
+                "hit": "On work"
+            }
+
+    ]
+}
