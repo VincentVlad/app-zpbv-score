@@ -1,6 +1,5 @@
 <template>
     <div class="post" v-for="team in teams" :key="team.id">
-
         <h4>{{team.name}}</h4>
         <input class="padding" placeholder="">
         <h3 class="padding">Очки {{team.point}}</h3>
@@ -28,13 +27,10 @@
             .catch(err => consol.log(err.message))
         },
         methods: {
-            addPoint:function() {
-                team.point ++;
-            }
+
         }
         
     }
-addPoint()
 </script>
 
 <style>
