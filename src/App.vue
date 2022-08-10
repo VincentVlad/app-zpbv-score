@@ -5,8 +5,8 @@
         <h3 class="padding">Очки {{team.point}}</h3>
         <h3 class="padding">Партия {{team.sets}}</h3>
         <div>
-            <button v-on:click="addPoint" class="btn"><h4>+1</h4></button>
-            <button class="btn"><h4>-1</h4></button>
+            <button v-on:click="addPoint(team.id)" class="btn"><h4>+1</h4></button>
+            <button v-on:click="team.sets--" class="btn"><h4>-1</h4></button>
         </div>
         <button disabled class="time-out">TimeOut (onwork)</button>
         </div>
@@ -14,6 +14,7 @@
 
 <script>
 import axios from "axios"
+const API_URL = "http://192.168.0.33:3000/teams";
 
     export default {
         data() 
@@ -22,34 +23,32 @@ import axios from "axios"
             teams: [],
             }
         },
-        async created() {
-            try {
-                const res = await axios.get('http://192.168.0.33:3000/teams');
-                this.teams = res.data;
-            }
-            catch(error)  {
-        if (!error.response) {
-            // network error
-            this.errorStatus = 'Error: Network Error';
-        } else {
-            this.errorStatus = error.response.data.message;
-        }
-      }
-        },
-        /*mounted() {
-            fetch('http://localhost:3000/teams')
+        mounted() {
+            fetch(API_URL)
             .then(res => res.json())
             .then(data => this.teams=data)
             .catch(err => consol.log(err.message))
         },
-        */
-
-
-        methods: {
-            
-        }
         
+        methods: {
+            async addPoint(id) {
+            try {
+                await axios.patch(`${API_URL}/${id}`, {
+                 })
+
+            this.teams = this.teams.map(team => {
+             if (team.id === id) {
+                team.point++;
+          }
+
+          return team;
+        });
+      } catch (e) {
+        console.error(e);
+      }
     }
+        }
+        }
 </script>
 
 <style>
