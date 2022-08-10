@@ -40,6 +40,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 await axios.patch(`${API_URL}/${id}`, { point: this.point, sets: this.sets,
                  })
 
+                 
+
             this.localData = this.localData.map(team => {
              if (team.id === id) {
                 team.point++;
