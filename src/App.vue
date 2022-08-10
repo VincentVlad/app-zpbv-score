@@ -6,7 +6,7 @@
         <h3 class="padding">Партия {{team.sets}}</h3>
         <div>
             <button v-on:click="addPoint(team.id)" class="btn"><h4>+1</h4></button>
-            <button v-on:click="team.point--" class="btn"><h4>-1</h4></button>
+            <button v-on:click="minusPoint(team.id)" class="btn"><h4>-1</h4></button>
         </div>
         <button disabled class="time-out">TimeOut (onwork)</button>
         </div>
@@ -22,8 +22,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
             return {
             teams: [],
             localData: [
-                {id: 1, point: 0, sets: 0,},
-                {id: 2, point: 0, sets: 0,}
+                {id: 1, name: "team1", point: 0, sets: 0,},
+                {id: 2, name: "team2", point: 0, sets: 0,}
             ],
             }
         },
@@ -37,21 +37,36 @@ const API_URL = "http://192.168.0.33:3000/teams";
         methods: {
             async addPoint(id) {
             try {
-                await axios.patch(`${API_URL}/${id}`, { point: this.point, sets: this.sets,
+                await axios.patch(`${API_URL}/${id}`, {point: this.point, sets: this.sets,
                  })
-
-                 
 
             this.localData = this.localData.map(team => {
              if (team.id === id) {
                 team.point++;
           }
 
-          return team;
+          return localData;
         });
       } catch (e) {
         console.error(e);
       }
+    },
+            async minusPoint(id) {
+                try {
+                await axios.patch(`${API_URL}/${id}`, {point: this.point, sets: this.sets,
+                 })
+
+                        this.localData = this.localData.map(team => {
+                        if (team.id === id) {
+                            team.point--;
+                        }
+
+                            return localData;
+                        });
+                    } 
+                    catch (e) {
+                console.error(e);
+                }
     }
         }
         }
