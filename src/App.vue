@@ -30,7 +30,7 @@ const API_URL = "http://192.168.0.33:3000/teams";
         mounted() {
             fetch(API_URL)
             .then(res => res.json())
-            .then(data => this.teams=data)
+            // .then(data => this.teams=data)
             .catch(err => consol.log(err.message))
         },
         
@@ -39,14 +39,21 @@ const API_URL = "http://192.168.0.33:3000/teams";
              this.localData = this.localData.map(team => {
                 if (team.id === id) {
                 team.point++;
-          }
+            }
                 return team
              })
                 },
 
+
             async updatePoint(id) {
             try {
-                await axios.patch(`${API_URL}/${id}`, { data: this.localData,
+                let data = JSON.parse(JSON.stringify(this.localData))
+                                
+                await axios.patch(`${API_URL}/${id}`, {
+                    id: data[id-1].id,
+                    name: data[id-1].name,
+                    point: data[id-1].point,
+                    sets: data[id-1].sets,             
                  })
 
       } catch (e) {
@@ -100,6 +107,9 @@ margin-right: 8px;
     border-radius: 8px;
 }
 
+h1,h2,h3,h4,h5,p{
+    color: white;
+}
 
 
 </style>
