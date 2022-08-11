@@ -46,16 +46,16 @@ const API_URL = "http://192.168.0.33:3000/teams";
 
             async updatePoint(id) {
             try {
-                await axios.patch(`${API_URL}/${id}`, {point: this.teams,
+                await axios.patch(`${API_URL}/${id}`, { score: this.localData
                  })
 
-            /*this.localData = this.localData.map(team => {
+            this.localData = this.localData.map(team => {
              if (team.id === id) {
-                team.point++;
+                team.point = team.point;
           }
 
           return team;
-        });*/
+        });
       } catch (e) {
         console.error(e);
       }
