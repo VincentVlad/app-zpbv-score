@@ -1,12 +1,13 @@
 <template>
     <div class="post" v-for="team in localData" :key="team.id">
-        <h4>{{team.name}}</h4>
-        <input class="padding" placeholder="">
-        <h3 class="padding">Очки {{team.point}}</h3>
-        <h3 class="padding">Партия {{team.sets}}</h3>
+        <input class="padding input" v-on:change="updateData(team.id)" v-model="team.name" placeholder="">
+        <h3>Очки</h3>
+        <input class="padding btn-score" v-on:change="updateData(team.id)" v-model="team.point">
+        <h3>Сет</h3>
+        <input class="padding btn-score" v-on:change="updateData(team.id)" v-model="team.sets">
         <div>
-            <button v-on:click="increase(team.id), updatePoint(team.id)" class="btn"><h4>+1</h4></button>
-            <button v-on:click="minusPoint(team.id)" class="btn"><h4>-1</h4></button>
+            <button v-on:click="increase(team.id), updateData(team.id)" class="btn"><h4>+1</h4></button>
+            <button v-on:click="decrease(team.id), checkZero(team.id), updateData(team.id)" class="btn"><h4>-1</h4></button>
         </div>
         <button disabled class="time-out">TimeOut (onwork)</button>
         </div>
@@ -44,8 +45,26 @@ const API_URL = "http://192.168.0.33:3000/teams";
              })
                 },
 
+                decrease(id) {
+             this.localData = this.localData.map(team => {
+                if (team.id === id) {
+                team.point--;
+            }
+                return team
+             })
+                },
 
-            async updatePoint(id) {
+                checkZero() {
+                    this.localData = this.localData.map(team => {
+                        if (team.point === -1) {
+                            team.point = 0;
+                        }
+                        return team
+                    })
+                },
+
+
+            async updateData(id) {
             try {
                 let data = JSON.parse(JSON.stringify(this.localData))
                                 
@@ -80,10 +99,14 @@ body {
     box-shadow: 0px 0px 15px rgb(90, 255, 170);
 }
 
-.post input {
-    width: 100px;
-    height: 30px;
+.input {
+    width: 150px;
+    height: 50px;
+    font-size: 20pt;
+    border-radius: 8px;
+    border: 0.5px solid white;
 }
+
 
 .padding {
 margin-right: 8px;
@@ -97,6 +120,19 @@ margin-right: 8px;
     margin-bottom: 20px;
     color: rgb(86, 152, 217);
     margin-right: 8px;
+}
+
+.btn-score {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+    background-color: rgb(222, 222, 222);
+    border:1px solid rgb(87, 220, 235);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    color: rgb(23, 127, 231);
+    margin-right: 8px;
+    text-align: center;
 }
 
 .time-out {
