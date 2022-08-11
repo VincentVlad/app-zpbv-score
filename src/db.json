@@ -2,7 +2,7 @@
   "teams": [
     {
       "id": 1,
-      "name": "Hshshd",
+      "name": "team1",
       "rating": 0,
       "on_serve": false,
       "sets": 0,
@@ -21,7 +21,7 @@
       "rating": 0,
       "on_serve": 0,
       "sets": 0,
-      "point": 6,
+      "point": 0,
       "time_out": false,
       "attacks": 0,
       "kills": 0,

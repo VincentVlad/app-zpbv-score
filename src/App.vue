@@ -5,6 +5,8 @@
             class="padding input" 
             v-on:change="updateData(team.id)" 
             v-model="team.name">
+
+        <div class="container_score">
         <h3>Сет</h3>
         <input 
             class="padding btn-score" 
@@ -15,24 +17,27 @@
             class="padding btn-score" 
             v-on:change="updateData(team.id)" 
             v-model="team.point">
+            </div>
         
         <div class="container_btn">
             <button 
             v-on:click="increase(team.id), 
                         updateData(team.id)" 
             class="btn-add">
-            <h4>+1</h4></button>
+            <h4>+</h4></button>
             <button 
             v-on:click="decrease(team.id), 
                         checkZero(team.id), 
                         updateData(team.id)" 
             class="btn-min">
-            <h4>-1</h4></button>
+            <h4>-</h4></button>
         </div>
         <div class="container_timeout"></div>
         <button disabled class="time-out">TimeOut (onwork)</button>
         </div>
-
+    <div>
+        
+    </div>
         <div class="reset_data">
             <button>Reset data</button>
         </div>
@@ -50,8 +55,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
             return {
             teams: [],
             localData: [
-                {id: 1, name: "team1", point: 0, sets: 0, },
-                {id: 2, name: "team2", point: 0, sets: 0,}
+                {id: 1, name: "team1", point: 0, sets: 0, on_serve: 0,},
+                {id: 2, name: "team2", point: 0, sets: 0, on_serve: 0,}
             ],
             }
         },
@@ -148,9 +153,17 @@ h1,h2,h3,h4,h5,p{
 margin-right: 8px;
 }
 
+.container_score {
+    
+}
+
 .btn-add {
     width: 46px;
     height: 46px;
+    font-size: 20pt;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(38, 252, 181);
     background: #475972;
     box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
@@ -191,7 +204,7 @@ margin-right: 8px;
     border-radius: 8px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
 
    .post {
     display: block;
