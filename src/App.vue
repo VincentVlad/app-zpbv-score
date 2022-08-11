@@ -40,43 +40,20 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 if (team.id === id) {
                 team.point++;
           }
-          return team
+                return team
              })
                 },
 
             async updatePoint(id) {
             try {
-                await axios.patch(`${API_URL}/${id}`, { score: this.localData
+                await axios.patch(`${API_URL}/${id}`, { data: this.localData,
                  })
 
-            this.localData = this.localData.map(team => {
-             if (team.id === id) {
-                team.point = team.point;
-          }
-
-          return team;
-        });
       } catch (e) {
         console.error(e);
       }
-    },
-            async minusPoint(id) {
-                try {
-                await axios.patch(`${API_URL}/${id}`, {point: this.point,
-                 })
-
-                        this.localData = this.localData.map(team => {
-                        if (team.id === id) {
-                            team.point--;
-                        }
-
-                            return team;
-                        });
-                    } 
-                    catch (e) {
-                console.error(e);
-                }
     }
+        
         }
         }
 </script>
