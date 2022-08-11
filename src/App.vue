@@ -5,7 +5,7 @@
         <h3 class="padding">Очки {{team.point}}</h3>
         <h3 class="padding">Партия {{team.sets}}</h3>
         <div>
-            <button v-on:click="addPoint(team.id)" class="btn"><h4>+1</h4></button>
+            <button v-on:click="increase(team.id), updatePoint(team.id)" class="btn"><h4>+1</h4></button>
             <button v-on:click="minusPoint(team.id)" class="btn"><h4>-1</h4></button>
         </div>
         <button disabled class="time-out">TimeOut (onwork)</button>
@@ -35,25 +35,34 @@ const API_URL = "http://192.168.0.33:3000/teams";
         },
         
         methods: {
-            async addPoint(id) {
+            increase(id) {
+             this.localData = this.localData.map(team => {
+                if (team.id === id) {
+                team.point++;
+          }
+          return team
+             })
+                },
+
+            async updatePoint(id) {
             try {
-                await axios.patch(`${API_URL}/${id}`, {point: this.point, sets: this.sets,
+                await axios.patch(`${API_URL}/${id}`, {point: this.teams,
                  })
 
-            this.localData = this.localData.map(team => {
+            /*this.localData = this.localData.map(team => {
              if (team.id === id) {
                 team.point++;
           }
 
-          return localData;
-        });
+          return team;
+        });*/
       } catch (e) {
         console.error(e);
       }
     },
             async minusPoint(id) {
                 try {
-                await axios.patch(`${API_URL}/${id}`, {point: this.point, sets: this.sets,
+                await axios.patch(`${API_URL}/${id}`, {point: this.point,
                  })
 
                         this.localData = this.localData.map(team => {
@@ -61,7 +70,7 @@ const API_URL = "http://192.168.0.33:3000/teams";
                             team.point--;
                         }
 
-                            return localData;
+                            return team;
                         });
                     } 
                     catch (e) {
