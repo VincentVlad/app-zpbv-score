@@ -1,18 +1,45 @@
+<!--Start HTML-->
 <template>
     <div class="post" v-for="team in localData" :key="team.id">
-        <input class="padding input" v-on:change="updateData(team.id)" v-model="team.name" placeholder="">
-        <h3>Очки</h3>
-        <input class="padding btn-score" v-on:change="updateData(team.id)" v-model="team.point">
+        <input 
+            class="padding input" 
+            v-on:change="updateData(team.id)" 
+            v-model="team.name">
         <h3>Сет</h3>
-        <input class="padding btn-score" v-on:change="updateData(team.id)" v-model="team.sets">
-        <div>
-            <button v-on:click="increase(team.id), updateData(team.id)" class="btn"><h4>+1</h4></button>
-            <button v-on:click="decrease(team.id), checkZero(team.id), updateData(team.id)" class="btn"><h4>-1</h4></button>
+        <input 
+            class="padding btn-score" 
+            v-on:change="updateData(team.id)" 
+            v-model="team.sets">
+        <h3>Очки</h3>
+        <input 
+            class="padding btn-score" 
+            v-on:change="updateData(team.id)" 
+            v-model="team.point">
+        
+        <div class="container_btn">
+            <button 
+            v-on:click="increase(team.id), 
+                        updateData(team.id)" 
+            class="btn-add">
+            <h4>+1</h4></button>
+            <button 
+            v-on:click="decrease(team.id), 
+                        checkZero(team.id), 
+                        updateData(team.id)" 
+            class="btn-min">
+            <h4>-1</h4></button>
         </div>
+        <div class="container_timeout"></div>
         <button disabled class="time-out">TimeOut (onwork)</button>
         </div>
-</template>
 
+        <div class="reset_data">
+            <button>Reset data</button>
+        </div>
+</template>
+<!--End HTML-->
+
+<!--Start Scripts-->
 <script>
 import axios from "axios"
 const API_URL = "http://192.168.0.33:3000/teams";
@@ -23,7 +50,7 @@ const API_URL = "http://192.168.0.33:3000/teams";
             return {
             teams: [],
             localData: [
-                {id: 1, name: "team1", point: 0, sets: 0,},
+                {id: 1, name: "team1", point: 0, sets: 0, },
                 {id: 2, name: "team2", point: 0, sets: 0,}
             ],
             }
@@ -46,12 +73,12 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 },
 
                 decrease(id) {
-             this.localData = this.localData.map(team => {
-                if (team.id === id) {
-                team.point--;
-            }
-                return team
-             })
+                    this.localData = this.localData.map(team => {
+                        if (team.id === id) {
+                            team.point--;
+                    }
+                    return team
+                    })
                 },
 
                 checkZero() {
@@ -59,7 +86,7 @@ const API_URL = "http://192.168.0.33:3000/teams";
                         if (team.point === -1) {
                             team.point = 0;
                         }
-                        return team
+                    return team
                     })
                 },
 
@@ -79,30 +106,39 @@ const API_URL = "http://192.168.0.33:3000/teams";
         console.error(e);
       }
     }
+            
         
         }
         }
 </script>
+<!--End scripts-->
 
+<!--Start Style-->
 <style>
 body {
-    background-color: rgb(6, 4, 42);
+    background: linear-gradient(117.08deg, #172F4B 2.19%, #3762B6 95.26%);
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+h1,h2,h3,h4,h5,p{
+    color: rgb(255, 255, 255);
 }
 
 .post {
     background-color: rgb(33, 51, 77);
-    display: block;
+    display: inline-flex;
     border: 1px solid green;
     border-radius: 8px;
     margin: 20px;
     padding: 8px;
-    box-shadow: 0px 0px 15px rgb(90, 255, 170);
+    box-shadow: 0px 0px 5px rgb(90, 255, 170);
 }
 
 .input {
     width: 150px;
     height: 50px;
-    font-size: 20pt;
+    font-size: 16pt;
     border-radius: 8px;
     border: 0.5px solid white;
 }
@@ -112,8 +148,19 @@ body {
 margin-right: 8px;
 }
 
-.btn {
-    width: 50px;
+.btn-add {
+    width: 46px;
+    height: 46px;
+    background: #475972;
+    box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-right: 8px;
+}
+
+.btn-min {
+    width: 46px;
+    height: 46px;
     background-color: rgb(20, 16, 68);
     border:1px solid rgb(87, 220, 235);
     border-radius: 8px;
@@ -126,6 +173,7 @@ margin-right: 8px;
     width: 60px;
     height: 60px;
     font-size: 20px;
+    font-weight: bold;
     background-color: rgb(222, 222, 222);
     border:1px solid rgb(87, 220, 235);
     border-radius: 8px;
@@ -143,9 +191,14 @@ margin-right: 8px;
     border-radius: 8px;
 }
 
-h1,h2,h3,h4,h5,p{
-    color: white;
+@media only screen and (max-width: 600px) {
+
+   .post {
+    display: block;
+   } 
+
 }
 
 
 </style>
+<!--End Style-->
