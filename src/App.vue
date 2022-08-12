@@ -72,12 +72,6 @@ const API_URL = " http://192.168.0.33:3000/teams";
              this.localData = this.localData.map(team => {
                 if (team.id === id) {
                 team.point++;
-                if (id === 1) {
-                team[1].errors++;
-                }
-                if (id === 2) {
-                team[0].errors++;
-                }
             } 
                 return team
              })
