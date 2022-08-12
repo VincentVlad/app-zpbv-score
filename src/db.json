@@ -19,7 +19,7 @@
       "id": 2,
       "name": "team2",
       "rating": 0,
-      "on_serve": 0,
+      "on_serve": false,
       "sets": 0,
       "point": 0,
       "time_out": false,
