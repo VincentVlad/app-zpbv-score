@@ -55,8 +55,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
             return {
             teams: [],
             localData: [
-                {id: 1, name: "team1", point: 0, sets: 0, on_serve: 0,},
-                {id: 2, name: "team2", point: 0, sets: 0, on_serve: 0,}
+                {id: 1, name: "team1", point: 0, sets: 0, on_serve: 0, errors: 0,},
+                {id: 2, name: "team2", point: 0, sets: 0, on_serve: 0, errors: 0,}
             ],
             }
         },
@@ -72,25 +72,22 @@ const API_URL = "http://192.168.0.33:3000/teams";
              this.localData = this.localData.map(team => {
                 if (team.id === id) {
                 team.point++;
-                if (id === 1) {
-                team[1].errors++;
-                }
-                if (id === 2) {
-                team[0].errors++;
-                }
+            }
+            if (team.id != id) {
+                team.errors++;
             }
                 return team
              })
                 },
 
-                decrease(id) {
-                    this.localData = this.localData.map(team => {
-                        if (team.id === id) {
-                            team.point--;
-                    }
+            decrease(id) {
+                this.localData = this.localData.map(team => {
+                    if (team.id === id) {
+                    team.point--;
+                    }   
                     return team
-                    })
-                },
+                })
+            },
 
                 checkZero() {
                     this.localData = this.localData.map(team => {
@@ -110,7 +107,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
                     id: data[id-1].id,
                     name: data[id-1].name,
                     point: data[id-1].point,
-                    sets: data[id-1].sets,             
+                    sets: data[id-1].sets,
+                    errors: data[id-1].errors,             
                  })
 
       } catch (e) {
