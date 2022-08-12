@@ -21,6 +21,7 @@
         
         <div class="container_btn">
             <button 
+
             v-on:click="increase(team.id), 
                         updateData(team.id)" 
             class="btn-add">
@@ -73,8 +74,13 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 if (team.id === id) {
                 team.point++;
             }
-            if (team.id != id) {
+            if (team.id !== id) {
                 team.errors++;
+                if (id === 1){
+                this.updateData(2)}
+                if (id === 2){
+                this.updateData(1)}
+
             }
                 return team
              })
@@ -99,22 +105,24 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 },
 
 
-            async updateData(id) {
+            updateData(id) {
             try {
                 let data = JSON.parse(JSON.stringify(this.localData))
                                 
-                await axios.patch(`${API_URL}/${id}`, {
+                axios.patch(`${API_URL}/${id}`, {
                     id: data[id-1].id,
                     name: data[id-1].name,
                     point: data[id-1].point,
                     sets: data[id-1].sets,
-                    errors: data[id-1].errors,             
+                    errors: data[id-1].errors,           
                  })
 
       } catch (e) {
         console.error(e);
       }
     }
+
+    
             
         
         }
