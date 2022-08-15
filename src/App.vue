@@ -22,7 +22,8 @@
         <div class="container_btn">
             <button 
 
-            v-on:click="increase(team.id), 
+            v-on:click="increase(team.id),
+                        hitPercentage(team.id),
                         updateData(team.id)" 
             class="btn-add">
             <h4>+</h4></button>
@@ -48,7 +49,7 @@
 <!--Start Scripts-->
 <script>
 import axios from "axios"
-const API_URL = "http://192.168.0.33:3000/teams";
+const API_URL = "http://localhost:3000/teams";
 
     export default {
         data() 
@@ -56,8 +57,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
             return {
             teams: [],
             localData: [
-                {id: 1, name: "team1", point: 0, sets: 0, on_serve: 0, errors: 0,},
-                {id: 2, name: "team2", point: 0, sets: 0, on_serve: 0, errors: 0,}
+                {id: 1, name: "team1", point: 0, sets: 0, on_serve: 0, attacks: 0, aces: 0, total_errors: 0, attack_errors: 0, serve_errors: 0, total_points: 0, hit: 0,},
+                {id: 2, name: "team2", point: 0, sets: 0, on_serve: 0, attacks: 0, aces: 0, total_errors: 0, attack_errors: 0, serve_errors: 0, total_points: 0, hit: 0,}
             ],
             }
         },
@@ -69,19 +70,50 @@ const API_URL = "http://192.168.0.33:3000/teams";
         },
         
         methods: {
+
             increase(id) {
-             this.localData = this.localData.map(team => {
-                if (team.id === id) {
-                team.point++;
-            }
-            if (team.id !== id) {
-                team.errors++;
-                if (id === 1){
-                this.updateData(2)}
-                if (id === 2){
-                this.updateData(1)}
+                this.localData = this.localData.map(team => {
+                    if (team.id === id) {
+                    team.kills++;
+                    }
+                return team
+             })
+                },
+
+            increase_attackError(id) {
+                this.localData = this.localData.map(team => {
+                    if (team.id === id) {
+                    team.point++;
+                    team.total_points++;
+                    }
+                    if (team.id !== id) {
+                        team.total_errors++;
+                        team.attack_errors++;
+                    if (id === 1){
+                    this.updateData(2)}
+                    if (id === 2){
+                    this.updateData(1)}
 
             }
+                return team
+             })
+                },
+
+            increase_serveErrors(id) {
+                this.localData = this.localData.map(team => {
+                    if (team.id === id) {
+                    team.point++;
+                    team.total_points++;
+                    }
+                    if (team.id !== id) {
+                    team.total_errors++;
+                    team.serve_errors++;
+                    if (id === 1){
+                    this.updateData(2)}
+                    if (id === 2){
+                    this.updateData(1)}
+
+                }
                 return team
              })
                 },
@@ -95,13 +127,22 @@ const API_URL = "http://192.168.0.33:3000/teams";
                 })
             },
 
-                checkZero() {
-                    this.localData = this.localData.map(team => {
-                        if (team.point === -1) {
-                            team.point = 0;
-                        }
+            checkZero() {
+                this.localData = this.localData.map(team => {
+                    if (team.point === -1) {
+                    team.point = 0;
+                    }
                     return team
-                    })
+                })
+                },
+
+            hitPercentage() {
+                this.localData = this.localData.map(team => {
+                    if (team.kills++ ) {
+                    team.hit = (team.kills - team.attack_errors) / team.attacks;
+                    }
+                    return team
+                })
                 },
 
 
@@ -114,7 +155,8 @@ const API_URL = "http://192.168.0.33:3000/teams";
                     name: data[id-1].name,
                     point: data[id-1].point,
                     sets: data[id-1].sets,
-                    errors: data[id-1].errors,           
+                    total_errors: data[id-1].total_errors,
+                    total_points: data[id-1].total_points,        
                  })
 
       } catch (e) {
@@ -136,6 +178,7 @@ body {
     background: linear-gradient(117.08deg, #172F4B 2.19%, #3762B6 95.26%);
     background-repeat: no-repeat;
     background-size: auto;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 h1,h2,h3,h4,h5,p{
